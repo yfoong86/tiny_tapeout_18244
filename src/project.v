@@ -5,7 +5,7 @@
 
 `default_nettype none
 
-module tt_um_example (
+module tt_um_yfoong86_chasey (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -17,11 +17,33 @@ module tt_um_example (
 );
 
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+  assign uio_out = 8'd0;
+  assign uio_oe  = 8'b11111111;
 
+  // ui_in[0] is rst_n
+  // ui_in[1] is btn_left
+  // ui_in[2] is btn_right
+  // ui_in[3] is btn_up
+  // ui_in[4] is btn_down
+  // uo_out[1:0] is red
+  // uo_out[3:2] is blue
+  // uo_out[5:4] is green
+  // uo_out[6] is hsync
+  // uo_out[7] is vsync
+
+  ChipInterface c0(.clk, .btn_rst(rst_n || ~ui_in[0]),
+                   .btn_left(ui_in[1]), 
+                   .btn_right(ui_in[2]), 
+                   .btn_up(ui_in[3]), 
+                   .btn_down(ui_in[4]),
+                   .vga_r0(uo_out[0]), .vga_r1(uo_out[1]),
+                   .vga_g0(uo_out[2]), .vga_g1(uo_out[3]),
+                   .vga_b0(uo_out[4]), .vga_b1(uo_out[5]),
+                   .vga_hs(uo_out[6]), .vga_vs(uo_out[7]));
+  
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  wire _unused = &{ena, 1'b0};
+  wire unused2 = &{uio_in, 8'd0};
+  wire unused3 = &{ui_in[7:5], 3'd0};
 
 endmodule
