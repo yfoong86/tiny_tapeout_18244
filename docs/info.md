@@ -6,7 +6,7 @@ through and avoid getting caught by the ghost.
 
 The logic is broken into the following sections:
 
-### PLAYER LOGIC ###
+### PLAYER LOGIC ### 
 The player is controlled by the button inputs (left, right, up, down) and will
 move accordingly on the map. There is also collision detection with the border
 and with the maze itself.
