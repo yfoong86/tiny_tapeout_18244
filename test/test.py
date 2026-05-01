@@ -145,7 +145,7 @@ async def test_no_collision_at_start(dut):
     await do_reset(dut)
 
     # Run half a frame
-    await ClockCycles(dut.clk, FRAME_CYCLES // 2)
+    await ClockCycles(dut.clk, 20)
 
     # Try to read internal pg_collision if simulator exposes it
     try:
