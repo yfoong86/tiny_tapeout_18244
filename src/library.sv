@@ -53,9 +53,14 @@ module Synchronizer
     output logic sync);
     logic temp;
 
-    always_ff @(posedge clock) begin
-        temp <= async;
-        sync <= temp;
+    always_ff @(posedge clock or negedge async) begin
+        if (~async) begin
+            temp <= 1'b0;
+            sync <= 1'b0;
+        end else begin
+            temp <= async;
+            sync <= temp;
+        end
     end
 
 endmodule: Synchronizer
