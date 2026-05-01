@@ -5,7 +5,7 @@ project:
   discord:      "" 
   description:  "Control a player in a maze to escape the ghost"    
   language:     "SystemVerilog" 
-  clock_hz:     25MHz      
+  clock_hz:     25      
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "1x2"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
