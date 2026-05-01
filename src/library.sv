@@ -49,18 +49,13 @@ module Counter
 endmodule: Counter
 
 module Synchronizer
-    (input logic async, clock,
+    (input logic async, clock, rst_n,
     output logic sync);
     logic temp;
 
-    always_ff @(posedge clock or negedge async) begin
-        if (~async) begin
-            temp <= 1'b0;
-            sync <= 1'b0;
-        end else begin
-            temp <= async;
-            sync <= temp;
-        end
+    always_ff @(posedge clock, negedge rst_n) begin
+        temp <= async;
+        sync <= temp;
     end
 
 endmodule: Synchronizer
