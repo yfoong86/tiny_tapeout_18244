@@ -50,7 +50,7 @@ async def do_reset(dut):
 async def test_reset(dut):
     """After reset, VGA sync outputs should be in a defined state and led=0."""
     dut._log.info("=== test_reset ===")
-    clock = Clock(dut.clk, 10, unit="us")
+    clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
     await do_reset(dut)
@@ -74,7 +74,7 @@ async def test_hsync_pulse(dut):
     We sample the first ~200 cycles and verify we see both states.
     """
     dut._log.info("=== test_hsync_pulse ===")
-    clock = Clock(dut.clk, 10, unit="us")
+    clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
     await do_reset(dut)
@@ -105,7 +105,7 @@ async def test_vsync_pulse(dut):
     Simulate 1.5 frames to guarantee we observe both high and low vsync.
     """
     dut._log.info("=== test_vsync_pulse ===")
-    clock = Clock(dut.clk, 10, unit="us")
+    clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
     await do_reset(dut)
@@ -139,7 +139,7 @@ async def test_no_collision_at_start(dut):
     confirm uo_out is stable.)
     """
     dut._log.info("=== test_no_collision_at_start ===")
-    clock = Clock(dut.clk, 10, unit="us")
+    clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
     await do_reset(dut)
@@ -168,7 +168,7 @@ async def test_outputs_defined_during_active_video(dut):
     on X/Z).
     """
     dut._log.info("=== test_outputs_defined_during_active_video ===")
-    clock = Clock(dut.clk, 10, unit="us")
+    clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
     await do_reset(dut)
