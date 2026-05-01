@@ -34,16 +34,19 @@ def decode_uo_out(val):
 
 
 async def do_reset(dut):
-    """Apply reset for 10 cycles then release."""
+    """Apply reset for 10 cycles then release.
+
+    btn_rst in the design is: rst_n || ~ui_in[0]
+    For btn_rst to go LOW (active reset), ui_in[0] must be 1 while rst_n=0.
+    Setting ui_in[0]=0 would force btn_rst=1 (no reset), so keep ui_in neutral.
+    """
     dut.ena.value    = 1
-    dut.ui_in.value  = 0          # all buttons low, rst_n_btn=0
+    dut.ui_in.value  = make_ui_in()  # ui_in[0]=1 so btn_rst = rst_n; buttons neutral
     dut.uio_in.value = 0
-    dut.rst_n.value  = 0          # top-level rst_n low
+    dut.rst_n.value  = 0             # top-level rst_n low → btn_rst=0 → resets ChipInterface
     await ClockCycles(dut.clk, 10)
-    dut.rst_n.value  = 1
-    # release the extra btn_rst too: ui_in[0]=1 means btn_rst_n=1 in ChipInterface
-    dut.ui_in.value  = make_ui_in()
-    await ClockCycles(dut.clk, 2)
+    dut.rst_n.value  = 1             # release reset → btn_rst=1 → normal operation
+    await ClockCycles(dut.clk, 2)    # allow synchronizer (2 FF stages) to propagate
 
 
 @cocotb.test()
