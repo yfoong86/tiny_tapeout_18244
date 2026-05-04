@@ -30,4 +30,14 @@ yourself.
 
 ### EXTERNAL HARDWARE ###
 - VGA Monitor (display)
-- 4 Buttons (Reset, Left, Right, Up, Down)
+- 5 Buttons wired as follows:
+
+| Button | Input pin |
+|--------|-----------|
+| Reset  | ui[0]     |
+| Left   | ui[1]     |
+| Right  | ui[2]     |
+| Up     | ui[3]     |
+| Down   | ui[4]     |
+
+Each button should connect the input pin to VCC when pressed (active high). The VGA connector wires directly to the output pins — no resistors or level shifting required for the Tiny Tapeout VGA PMOD.

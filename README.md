@@ -1,42 +1,53 @@
-![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
+### PROJECT DESCIPTION ###
 
-# Tiny Tapeout Verilog Project Template
+The project is a maze that is displayed on a VGA monitor where you can control
+a player using four buttons (left, right, up, and down) in order to navigate
+through and avoid getting caught by the ghost. 
 
-- [Read the documentation for project](docs/info.md)
+The logic is broken into the following sections:
 
-## What is Tiny Tapeout?
+### PLAYER LOGIC ###
+The player is controlled by the button inputs (left, right, up, down) and will
+move accordingly on the map. There is also collision detection with the border
+and with the maze itself.
 
-Tiny Tapeout is an educational project that aims to make it easier and cheaper than ever to get your digital and analog designs manufactured on a real chip.
+### GHOST LOGIC ###
+The ghost is set to try and follow the player around on the board. It will
+attempt to locate the player at all times, although sometimes it gets stuck
+with an obstacle and can't catch the player.
 
-To learn more and get started, visit https://tinytapeout.com.
+### MAZE LOGIC ###
+The maze or map are draw on the map and also detect for collisions throughout
+using different boundary checks to make sure that if there would be a collision,
+the player or ghost's coordinates don't get updated.
 
-## Set up your Verilog project
+### TESTING ###
+You can test the project using the provided testbench or playing the game
+yourself.
 
-1. Add your Verilog files to the `src` folder.
-2. Edit the [info.yaml](info.yaml) and update information about your project, paying special attention to the `source_files` and `top_module` properties. If you are upgrading an existing Tiny Tapeout project, check out our [online info.yaml migration tool](https://tinytapeout.github.io/tt-yaml-upgrade-tool/).
-3. Edit [docs/info.md](docs/info.md) and add a description of your project.
-4. Adapt the testbench to your design. See [test/README.md](test/README.md) for more information.
+### PINS ###
 
-The GitHub action will automatically build the ASIC files using [LibreLane](https://www.zerotoasiccourse.com/terminology/librelane/).
+Inputs
+| Pin   | Function     |
+|-------|-------------|
+| ui[0] | Reset        |
+| ui[1] | Move Left    |
+| ui[2] | Move Right   |
+| ui[3] | Move Up      |
+| ui[4] | Move Down    |
 
-## Enable GitHub actions to build the results page
+Outputs (VGA)
+| Pin   | Function        |
+|-------|----------------|
+| uo[0] | VGA Red[0]     |
+| uo[1] | VGA Red[1]     |
+| uo[2] | VGA Green[0]   |
+| uo[3] | VGA Green[1]   |
+| uo[4] | VGA Blue[0]    |
+| uo[5] | VGA Blue[1]    |
+| uo[6] | VGA HSync      |
+| uo[7] | VGA VSync      |
 
-- [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
-
-## Resources
-
-- [FAQ](https://tinytapeout.com/faq/)
-- [Digital design lessons](https://tinytapeout.com/digital_design/)
-- [Learn how semiconductors work](https://tinytapeout.com/siliwiz/)
-- [Join the community](https://tinytapeout.com/discord)
-- [Build your design locally](https://www.tinytapeout.com/guides/local-hardening/)
-
-## What next?
-
-- [Submit your design to the next shuttle](https://app.tinytapeout.com/).
-- Edit [this README](README.md) and explain your design, how it works, and how to test it.
-- Share your project on your social network of choice:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
-  - Bluesky [@tinytapeout.com](https://bsky.app/profile/tinytapeout.com)
+### EXTERNAL HARDWARE ###
+- VGA Monitor (display)
+- 4 Buttons (Reset, Left, Right, Up, Down)
