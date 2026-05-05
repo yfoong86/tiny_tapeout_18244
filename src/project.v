@@ -25,11 +25,14 @@ module tt_um_yfoong86_chasey (
   // ui_in[2] is btn_right
   // ui_in[3] is btn_up
   // ui_in[4] is btn_down
-  // uo_out[1:0] is red
-  // uo_out[3:2] is blue
-  // uo_out[5:4] is green
-  // uo_out[6] is hsync
-  // uo_out[7] is vsync
+  // uo_out[0] is vga_r1
+  // uo_out[1] is vga_g1
+  // uo_out[2] is vga_b1
+  // uo_out[3] is vga_vs
+  // uo_out[4] is vga_r0
+  // uo_out[5] is vga_g0
+  // uo_out[6] is vga_b0
+  // uo_out[7] is vga_hs
 
   ChipInterface c0(.clk, .btn_rst(rst_n || ~ui_in[0]),
                    .btn_left(ui_in[1]), 
