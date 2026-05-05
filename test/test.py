@@ -23,13 +23,21 @@ def make_ui_in(left=0, right=0, up=0, down=0, rst_n_btn=1):
 
 
 def decode_uo_out(val):
-    """Decode uo_out into VGA fields."""
+    """Decode uo_out into VGA fields.
+
+    Pin mapping (per project.v):
+      bit 0 = r1, bit 1 = g1, bit 2 = b1
+      bit 3 = vsync, bit 4 = r0, bit 5 = g0, bit 6 = b0, bit 7 = hsync
+    """
+    r = ((val >> 0) & 1) << 1 | ((val >> 4) & 1)
+    g = ((val >> 1) & 1) << 1 | ((val >> 5) & 1)
+    b = ((val >> 2) & 1) << 1 | ((val >> 6) & 1)
     return {
-        "r":    (val >> 0) & 0x3,
-        "g":    (val >> 2) & 0x3,
-        "b":    (val >> 4) & 0x3,
-        "hsync": (val >> 6) & 0x1,
-        "vsync": (val >> 7) & 0x1,
+        "r":     r,
+        "g":     g,
+        "b":     b,
+        "vsync": (val >> 3) & 0x1,
+        "hsync": (val >> 7) & 0x1,
     }
 
 
@@ -72,7 +80,7 @@ async def test_reset(dut):
 @cocotb.test()
 async def test_hsync_pulse(dut):
     """
-    hsync (uo_out[6]) should go high for the first 96 columns of each line,
+    hsync (uo_out[7]) should go high for the first 96 columns of each line,
     i.e. we should see it high shortly after reset and then go low.
     We sample the first ~200 cycles and verify we see both states.
     """
@@ -87,7 +95,7 @@ async def test_hsync_pulse(dut):
 
     for _ in range(200):
         await RisingEdge(dut.clk)
-        hsync = (int(dut.uo_out.value) >> 6) & 1
+        hsync = (int(dut.uo_out.value) >> 7) & 1
         if hsync == 1:
             seen_high = True
         if hsync == 0:
@@ -104,7 +112,7 @@ async def test_hsync_pulse(dut):
 @cocotb.test()
 async def test_vsync_pulse(dut):
     """
-    vsync (uo_out[7]) should be high for the first 2 lines (rows 0-1).
+    vsync (uo_out[3]) should be high for the first 2 lines (rows 0-1).
     Simulate 1.5 frames to guarantee we observe both high and low vsync.
     """
     dut._log.info("=== test_vsync_pulse ===")
@@ -119,7 +127,7 @@ async def test_vsync_pulse(dut):
     # sample every 100 cycles to stay fast
     for _ in range(FRAME_CYCLES * 2 // 100):
         await ClockCycles(dut.clk, 100)
-        vsync = (int(dut.uo_out.value) >> 7) & 1
+        vsync = (int(dut.uo_out.value) >> 3) & 1
         if vsync == 1:
             seen_high = True
         if vsync == 0:
