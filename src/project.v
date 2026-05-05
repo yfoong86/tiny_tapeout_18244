@@ -36,10 +36,10 @@ module tt_um_yfoong86_chasey (
                    .btn_right(ui_in[2]), 
                    .btn_up(ui_in[3]), 
                    .btn_down(ui_in[4]),
-                   .vga_r0(uo_out[0]), .vga_r1(uo_out[1]),
-                   .vga_g0(uo_out[2]), .vga_g1(uo_out[3]),
-                   .vga_b0(uo_out[4]), .vga_b1(uo_out[5]),
-                   .vga_hs(uo_out[6]), .vga_vs(uo_out[7]));
+                   .vga_r0(uo_out[4]), .vga_r1(uo_out[0]),
+                   .vga_g0(uo_out[5]), .vga_g1(uo_out[1]),
+                   .vga_b0(uo_out[6]), .vga_b1(uo_out[2]),
+                   .vga_hs(uo_out[7]), .vga_vs(uo_out[3]));
   
   // List all unused inputs to prevent warnings
   wire _unused = &{ena, 1'b0};

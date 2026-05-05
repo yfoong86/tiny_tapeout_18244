@@ -39,14 +39,14 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: "VGA red[0]"
-  uo[1]: "VGA red[1]"
-  uo[2]: "VGA green[2]"
-  uo[3]: "VGA green[3]"
-  uo[4]: "VGA blue[4]"
-  uo[5]: "VGA blue[5]"
-  uo[6]: "VGA hsync"
-  uo[7]: "VGA vsync"
+  uo[0]: "VGA red[1]"
+  uo[1]: "VGA green[1]"
+  uo[2]: "VGA blue[1]"
+  uo[3]: "VGA vsync"
+  uo[4]: "VGA red[0]"
+  uo[5]: "VGA blue[0]"
+  uo[6]: "VGA green[0]"
+  uo[7]: "VGA hsync"
 
   # Bidirectional pins
   uio[0]: ""
